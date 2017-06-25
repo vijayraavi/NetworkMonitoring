@@ -37,6 +37,9 @@
 
     # 2. Initialize
     $ToolPath = "C:\ACTTools\"
+    $GitHubURL = "https://raw.githubusercontent.com/tracsman/NetworkMonitoring/LinkPerf/AzureCT/PowerShell/AzureCT/Public/"
+    $PSPingURL = "https://live.sysinternals.com/psping.exe"
+    $iPerf3URL = "https://iperf.fr/download/windows/iperf-3.1.3-win64.zip"
 
     # 3. Create C:\ACTTools dir
     If (-Not (Test-Path $ToolPath)){New-Item -ItemType Directory -Force -Path $ToolPath | Out-Null}
@@ -49,7 +52,7 @@
         $File = $ToolPath + "iperf-3.1.3-win64.zip"
         Try {
             $webClient = new-object System.Net.WebClient
-            $webClient.DownloadFile('https://iperf.fr/download/windows/iperf-3.1.3-win64.zip', $File)
+            $webClient.DownloadFile($iPerf3URL, $File)
             }
         Catch {
             Write-Host
@@ -57,9 +60,9 @@
             Write-Host
             Write-Host "You can manually add the files and rerun this Install script."
             Write-Host "To manually install iPerf3:"
-            Write-Host "  1. Download files from https://iperf.fr/download/windows/iperf-3.1.3-win64.zip"
+            Write-Host "  1. Download the zip file from $iPerf3URL"
             Write-Host "  2. Extract zipped files (iPerf3.exe and cygwin1.dll) to $ToolPath"
-            Write-Host "  3. With those files in place, rerun this install script."
+            Write-Host "  3. With those files in place, rerun this install."
             Write-Host
             Return
             } # End Try
@@ -79,11 +82,10 @@
             Write-Host "To manually install iPerf3:"
             Write-Host "  1. Find $File"
             Write-Host "  2. Extract zipped files (iPerf3.exe and cygwin1.dll) to $ToolPath (not a subdirectory!)"
-            Write-Host "  3. With those files in place, rerun this install script."
+            Write-Host "  3. With those files in place, rerun this install."
             Write-Host
             Return
-        } # End Try
-
+            } # End Try
         } # End If
 
 
@@ -93,7 +95,7 @@
         $File = $ToolPath + "psping.exe"
         Try {
             $webClient = new-object System.Net.WebClient
-            $webClient.DownloadFile('https://live.sysinternals.com/psping.exe', $File)
+            $webClient.DownloadFile($PSPingURL, $File)
             }
         Catch {
             Write-Host
@@ -101,29 +103,25 @@
             Write-Host
             Write-Host "You can manually add the file and rerun this Install script."
             Write-Host "To manually install PSPing:"
-            Write-Host "  1. Download the file from https://live.sysinternals.com/psping.exe"
+            Write-Host "  1. Download the file from $PSPingURL"
             Write-Host "  2. Move the psping.exe file to the $ToolPath directory."
-            Write-Host "  3. With psping.exe in place, rerun this install script."
+            Write-Host "  3. With psping.exe in place, rerun this install."
             Write-Host
             Return
             } # End Try
         } # End If
 
     # 6. Check other files
-    # Do I need to download the Install and Get .ps1 files if they are installed in the module?
     $FileName = @()
-    If (-Not (Test-Path ($ToolPath + "Install-LinkPerformance.ps1"))){$FileName += 'Install-LinkPerformance.ps1'}
-    If (-Not (Test-Path ($ToolPath + "Get-LinkPerformance.ps1"))){$FileName += 'Get-LinkPerformance.ps1'}
     If (-Not (Test-Path ($ToolPath + "Set-iPerfFirewallRules.ps1"))){$FileName += 'Set-iPerfFirewallRules.ps1'}
     If (-Not (Test-Path ($ToolPath + "README.md"))){$FileName += 'README.md'}
 
     # 7. Pull from GitHub if needed
     If ($FileName.Count -gt 0) {
         Try {
-            $uri = 'https://raw.githubusercontent.com/tracsman/1DayLab/DontLook/PerfTest/'
             ForEach ($File in $FileName) {
                 $webClient = new-object System.Net.WebClient
-                $webClient.DownloadFile( $uri + $File, $ToolPath + $File )
+                $webClient.DownloadFile( $GitHubURL + $File, $ToolPath + $File )
                 } #End ForEach
             }
         Catch {
@@ -132,9 +130,9 @@
             Write-Host
             Write-Host "You can manually add the four files and rerun this Install script."
             Write-Host "To manually install the files:"
-            Write-Host "  1. Go to https://github.com/tracsman/1DayLab/tree/DontLook/PerfTest"
-            Write-Host "  2. Download the files in that directory to the local $ToolPath directory."
-            Write-Host "  3. With these files in place, rerun this install script."
+            Write-Host "  1. Go to $GitHubURL"
+            Write-Host "  2. Save the files 'Set-iPerfFirewallRules.ps1' and 'README.md' to the local $ToolPath directory."
+            Write-Host "  3. With these files in place, rerun this install."
             Write-Host
             Return
             } # End Try
