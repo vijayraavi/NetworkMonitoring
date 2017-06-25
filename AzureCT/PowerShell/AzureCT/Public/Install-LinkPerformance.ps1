@@ -150,5 +150,3 @@
     Else {Invoke-Expression -Command ($ToolPath + "Set-iPerfFirewallRules.ps1")}
 
 } # End Function
-
-Install-LinkPerformance -Force

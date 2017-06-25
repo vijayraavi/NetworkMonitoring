@@ -345,4 +345,4 @@
 
 } # End Function
 
-Get-LinkPerformance -RemoteHost 127.0.0.1 -TestSeconds 10 -DetailedOutput -Verbose
+# Get-LinkPerformance -RemoteHost 127.0.0.1 -TestSeconds 10 -DetailedOutput -Verbose
