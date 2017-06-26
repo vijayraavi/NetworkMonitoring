@@ -11,6 +11,47 @@
     # 8. Kill PSPing popup
     # 9. Open Firewall rules
 
+    <#
+    .SYNOPSIS
+        Downloads critial files required to run the Get-LinkPerformance command in the Azure Connectivity Toolkit.
+
+    .DESCRIPTION
+        To enable the Get-LinkPerformance command to run succesfully, certain third party applications are
+        needed as well as local host configurations. The Install-LinkPerformance command will download and
+        configure these requirements.
+
+        This command only needs to be run once for a given host. However if required files are deleted or
+        the host is configured so that Get-LinkPerformance can't run successfully you will be prompted to
+        run Install-LinkPerformance again to get the host enabled for successfull testing.
+
+        When called, this cmdlet will perform the following step:
+        1. Create a C:\ACTTools directory
+        2. Download iPerf3 files to the directory
+        3. Download PSPing to the directory
+        4. Download two files from GitHub (a firewalls rule script, and a readme file)
+        5. Accept the EULA for PSPing
+        6. Open the local host firewall for ICMP and Port 5201 traffic
+
+    .PARAMETER Force
+        This optional parameter will bypass the "Are you sure" prompt and enable a silent or scripted installation.
+
+    .EXAMPLE
+        Install-LinkPerformance
+
+        This command will prompt the user to ensure they accept the changes performed by this installation. If conditions
+        are accepted, the installation continues, if not accepted, the installation ends with no changes make to the host.
+
+    .EXAMPLE
+        Install-LinkPerformance -Force
+
+        This command will bypass the user prompt and begin the installation and configuration changes.
+
+    .LINK
+        https://github.com/Azure/NetworkMonitoring
+
+    #>
+
+
     Param([switch]$Force=$false)
 
     # 1. Warning check

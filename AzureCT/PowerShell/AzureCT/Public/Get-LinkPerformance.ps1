@@ -60,34 +60,34 @@
 
     .PARAMETER RemoteHostOS
         This optional parameter signifies the operating system of the REMOTE host. Valid values are "Windows" or "Linux".
-        It is assumed that if the remote host is Linux that port 22 is open for the PSPing, if Windows PSPing will use
-        the RDP port 3389
+        It is assumed that if the remote host is Linux it is listening on port 22. If Windows PSPing will use the RDP port
+        3389.
 
     .PARAMETER TestSeconds
         This optional parameter signifies the duration of PSPing test in seconds. It is an integer value (whole number).
-        The range of valid values is 60 - 3600 seconds (1 minute - 1 hour). The default value is 60.
+        The range of valid values is 10 - 3600 seconds (10 seconds - 1 hour). The default value is 60 seconds (1 minute).
 
     .PARAMETER DetailedOutput
         This optional parameter affects the output of the data results. Normal output consists of the Test Name, Bandwidth,
         Packet Loss, and the 50th percentile value for latency. With this parameter enabled addition data fields (Count of
-        packets sent for each test, the Minimum, Maximum, Average, 90th, and 95th percentile latency values) are sent as
-        output.
+        packets sent for each test, the Minimum, Maximum, Average, 90th, and 95th percentile latency values) are also sent
+        as output.
 
     .EXAMPLE
         Get-LinkPerformance -RemoteHost 10.0.0.1
 
-        # Get network performance stats from a windows server at 10.0.0.1 for 6 one minute tests (default host type
-        (Windows) and test duration (60 seconds) )
+        This command returns network performance stats from a windows server at 10.0.0.1 for 6 one minute tests (default
+        host type (Windows) and test duration (60 seconds))
 
     .EXAMPLE
         Get-LinkPerformance -RemoteHost 10.0.0.1 -HostType Linux -TestSeconds 3600
 
-        # Get network performance stats from a Linux server at 10.0.0.1 for 6 one-hour tests (3600 seconds)
+        This command returns network performance stats from a Linux server at 10.0.0.1 for 6 one-hour tests (3600 seconds)
 
     .EXAMPLE
         (Get-AzureVM -ServiceName 'myServiceName' -Name 'myVMName').IpAddress | Get-LinkPerformance
 
-        # Pull VNet IP address from a VM in Azure and pipe it to the Get-AzureNetworkAvailability cmdlet
+        This command pulls the VNet IP address from a VM in Azure and pipes it to the Get-AzureNetworkAvailability cmdlet
 
     .LINK
         https://github.com/Azure/NetworkMonitoring
@@ -342,5 +342,3 @@
     Else {Write-Output $TestResults | Select Name, Bandwidth, Loss, P50 | ft}
 
 } # End Function
-
-# Get-LinkPerformance -RemoteHost 127.0.0.1 -TestSeconds 10 -DetailedOutput -Verbose
