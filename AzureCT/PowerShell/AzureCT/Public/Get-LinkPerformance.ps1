@@ -15,11 +15,6 @@
     #    7.4 Add results to object array
     # 8. Output results
 
-
-    # File links
-    # https://live.sysinternals.com/psping.exe 
-    # https://iperf.fr/download/windows/iperf-3.1.3-win64.zip
-
     <#
     .SYNOPSIS
         Run a series of iPerf load tests and PSPing TCP pings concurrently between a local source and a remote host
@@ -63,7 +58,7 @@
         This parameter is required and is the Remote Host IP Address. This host must be running iPerf3 in server mode and
         be listening on either port 22 (SSH) for Linux hosts or 3389 (RDP) for Windows hosts.
 
-    .PARAMETER HostType
+    .PARAMETER RemoteHostOS
         This optional parameter signifies the operating system of the REMOTE host. Valid values are "Windows" or "Linux".
         It is assumed that if the remote host is Linux that port 22 is open for the PSPing, if Windows PSPing will use
         the RDP port 3389
@@ -71,6 +66,12 @@
     .PARAMETER TestSeconds
         This optional parameter signifies the duration of PSPing test in seconds. It is an integer value (whole number).
         The range of valid values is 60 - 3600 seconds (1 minute - 1 hour). The default value is 60.
+
+    .PARAMETER DetailedOutput
+        This optional parameter affects the output of the data results. Normal output consists of the Test Name, Bandwidth,
+        Packet Loss, and the 50th percentile value for latency. With this parameter enabled addition data fields (Count of
+        packets sent for each test, the Minimum, Maximum, Average, 90th, and 95th percentile latency values) are sent as
+        output.
 
     .EXAMPLE
         Get-LinkPerformance -RemoteHost 10.0.0.1
@@ -116,14 +117,11 @@
 
     # 2. Initialize
     $WebSource = "https://github.com/Azure/NetworkMonitoring"
-    #$Verbose = $VerbosePreference -ne [System.Management.Automation.ActionPreference]::SilentlyContinue
     $FileArray = "P00", "P01", "P06", "P16", "P17", "P32"
     $PingDuration = $TestSeconds
     $LoadDuration = $TestSeconds + 10
     If ($RemoteHostOS="Windows") {$PingPort="3389"} Else {$PingPort="22"}
     [String]$HostPort = [string]$RemoteHost + ":" + [String]$PingPort
-
-    #$FileArray = "P01"
 
     # 3. Clear old run files
     Remove-Job -Name ACT.LinkPerf -Force -ErrorAction SilentlyContinue
@@ -150,10 +148,10 @@
         Write-Warning "Unable to start iPerf session.
 
         Things to check:
-         - Ensure iPerf is running in server mode (iperf3 -s) on the remote server at $RemoteHost
+         - Ensure iPerf is running in server mode (iperf3 -s) on the remote host at $RemoteHost
          - Ensure remote iPerf server is listening on the default port 5201
          - Check host and network firewalls to ensure this port is open on both hosts and any network devices between them
-         - Ensure iPerf files are installed in C:\ACTTools, if not rerun the Install-LinkPerformance.ps1
+         - Ensure iPerf files are installed in C:\ACTTools, if not rerun Install-LinkPerformance
          - Ensure remote iPerf version is compatible with local version
 
         See $WebSource for more information."
@@ -179,10 +177,10 @@
         Write-Warning "Unable to TCP ping remote machine.
 
         Things to check:
-         - Ensure $HostPort is listening and reachable from this machine.
+         - Ensure $HostPort is listening and reachable from this machine
          - Ensure remote OS attribute setting is correct, it's currently set to ""$RemoteHostOS""
          - Check host and network firewalls to ensure this port is open
-         - Ensure PSPing.exe is installed in C:\ACTTools, if not rerun the Install-LinkPerformance.ps1
+         - Ensure PSPing.exe is installed in C:\ACTTools, if not rerun Install-LinkPerformance
 
         See $WebSource for more information."
         Return
