@@ -38,19 +38,21 @@
          - 16 Sessions with 1Mb window, a PSPing TCP test with iPerf3 running a 16 thread load test with a 1Mb window
          - 32 Sessions, a PSPing TCP test with iPerf3 running a 32 thread load test
 
-         For each test iPerf is kicked off and allowed to run for 10 seconds to establish the load and allow it to level
-         Then PSPing is kicked off to record latency during the load test.
-         Results from each test are stored in a text file in user profile directory ($env:USERPROFILE)
+         For each test iPerf is started and allowed to run for 10 seconds to establish the load and allow it to level.
+         PSPing is then started to record latency during the load test.
 
-         Output for each test is displayed in a table with the following columns:
+         Results from each test are stored in a text file in the root user profile directory ($env:USERPROFILE)
+
+         Output for each test is displayed in a table formatted object with the following columns:
           - Name: The name of the test for these values, eg No load, 1 session, etc
           - Bandwidth: The average bandwidth achieved by iPerf for the given test
-          - Loss: percentage of packet lost during the PSPing test
+          - Loss: percentage of packets lost during the PSPing test
           - P50 Latency: the 50th percentile of latency seen during the test
 
-          If the Verbose option (-Verbose) is used:
+          If the Verbose option (-Verbose) is used the following columns are also output:
           - P90 Latency: the 90th percentile of latency seen during the test
           - P95 Latency: the 95th percentile of latency seen during the test
+          - Avg Latency: the average TCP ping latency seen during the test
           - Min Latency: the minumum TCP ping latency seen during the test
           - Max Latency: the maximum TCP ping latency seen during the test
 
@@ -64,7 +66,7 @@
         3389.
 
     .PARAMETER TestSeconds
-        This optional parameter signifies the duration of PSPing test in seconds. It is an integer value (whole number).
+        This optional parameter signifies the duration of the PSPing test in seconds. It is an integer value (whole number).
         The range of valid values is 10 - 3600 seconds (10 seconds - 1 hour). The default value is 60 seconds (1 minute).
 
     .PARAMETER DetailedOutput
@@ -338,7 +340,7 @@
     } # End Foreach
 
     # 8. Output results
-    If ($DetailedOutput) {Write-Output $TestResults | ft}
-    Else {Write-Output $TestResults | Select Name, Bandwidth, Loss, P50 | ft}
+    If ($DetailedOutput) {Write-Output $TestResults}
+    Else {Write-Output $TestResults | Select Name, Bandwidth, Loss, P50}
 
 } # End Function
