@@ -41,7 +41,7 @@
          For each test iPerf is started and allowed to run for 10 seconds to establish the load and allow it to level.
          PSPing is then started to record latency during the load test.
 
-         Results from each test are stored in a text file in the root user profile directory ($env:USERPROFILE)
+         Results from each test are stored in a text file in the AzureCT Tools directory (C:\ACTTools)
 
          Output for each test is displayed in a table formatted object with the following columns:
           - Name: The name of the test for these values, eg No load, 1 session, etc
@@ -49,7 +49,7 @@
           - Loss: percentage of packets lost during the PSPing test
           - P50 Latency: the 50th percentile of latency seen during the test
 
-          If the Verbose option (-Verbose) is used the following columns are also output:
+          If the detailed output option (-DetailedOutput) is used, the following columns are also output:
           - P90 Latency: the 90th percentile of latency seen during the test
           - P95 Latency: the 95th percentile of latency seen during the test
           - Avg Latency: the average TCP ping latency seen during the test
@@ -118,6 +118,7 @@
     )
 
     # 2. Initialize
+    $ToolPath = "C:\ACTTools\"
     $WebSource = "https://github.com/Azure/NetworkMonitoring"
     $FileArray = "P00", "P01", "P06", "P16", "P17", "P32"
     $PingDuration = $TestSeconds
@@ -127,13 +128,13 @@
 
     # 3. Clear old run files
     Remove-Job -Name ACT.LinkPerf -Force -ErrorAction SilentlyContinue
-    If (Test-Path "$env:USERPROFILE\TestPing.log"){Remove-Item "$env:USERPROFILE\TestPing.log"}
-    If (Test-Path "$env:USERPROFILE\TestPerf.log"){Remove-Item "$env:USERPROFILE\TestPerf.log"}
-    If (Test-Path "$env:USERPROFILE\P*ping.log"){Remove-Item "$env:USERPROFILE\P*ping.log"}
-    If (Test-Path "$env:USERPROFILE\P*perf.log"){Remove-Item "$env:USERPROFILE\P*perf.log"}
+    If (Test-Path $ToolPath"TestPing.log"){Remove-Item $ToolPath"TestPing.log"}
+    If (Test-Path $ToolPath"TestPerf.log"){Remove-Item $ToolPath"TestPerf.log"}
+    If (Test-Path $ToolPath"P*ping.log"){Remove-Item $ToolPath"P*ping.log"}
+    If (Test-Path $ToolPath"P*perf.log"){Remove-Item $ToolPath"P*perf.log"}
     
     # 4. Validate iPerf3 connectivity (two ping)Error Stop
-    $FileName=$env:USERPROFILE+"\TestPerf.log"
+    $FileName = $ToolPath + "\TestPerf.log"
     $iPerfJob = Start-Job -ScriptBlock {C:\ACTTools\iperf3.exe -c $args[0] -t 2 -i 0 -P 1 --logfile $args[1]} -Name 'ACT.LinkPerf' -ArgumentList "$RemoteHost", "$FileName"
     Wait-Job -Name "ACT.LinkPerf" | Out-Null
     # Line Loop
@@ -160,7 +161,7 @@
         Return } # End If
    
     # 5. Validate PSPing connectivity (two ping)Error Stop
-    $FileName=$env:USERPROFILE+"\TestPing.log"
+    $FileName = $ToolPath+"\TestPing.log"
     $iPerfJob = Start-Job -ScriptBlock {C:\ACTTools\psping.exe -n 2 -4 $args[0] -nobanner > $args[1]} -Name 'ACT.LinkPerf' -ArgumentList "$HostPort", "$FileName"
     Wait-Job -Name "ACT.LinkPerf" | Out-Null
     # Line Loop
@@ -206,7 +207,7 @@
         Write-Host $TestName -ForegroundColor Cyan
 
         # 6.1 Start iPerf job if required
-        $FileName=$env:USERPROFILE+"\"+$FilePrefix+"perf.log"
+        $FileName = $ToolPath + "\" + $FilePrefix + "perf.log"
         Switch($FilePrefix) {
             "P00" {}
             "P17" {
@@ -218,7 +219,7 @@
         } # End Switch
     
         # 6.2 Start PSPing job
-        $FileName=$env:USERPROFILE+"\"+$FilePrefix+"ping.log"
+        $FileName = $ToolPath + "\" + $FilePrefix + "ping.log"
         [string]$StringDuration = $PingDuration.ToString() + "s"
         $iPerfJob = Start-Job -ScriptBlock {C:\ACTTools\psping.exe -n $args[0] -4 $args[1] -nobanner > $args[2]} -Name 'ACT.LinkPerf' -ArgumentList "$StringDuration", "$HostPort", "$FileName"
 
@@ -238,8 +239,7 @@
             } # End While
         } # End For
  
-    Write-Host "All Done!" -ForegroundColor Cyan
-    Write-Verbose "All Done!"
+    Write-Host "Testing Complete!" -ForegroundColor Cyan
 
     # 7. Parse each job file for data
     $TestResults=@()
@@ -256,7 +256,7 @@
         } # End Switch
 
         # 7.1 iPerf3 log file line loop
-        $FileName = $env:USERPROFILE + "\" + $FilePrefix + "perf.log"
+        $FileName = $ToolPath + "\" + $FilePrefix + "perf.log"
         $TPut = "Error"
         If ($FilePrefix -eq "P00") {
              $TPut = "N/A"}
@@ -276,7 +276,7 @@
 
 
         # 7.2 PSPing log file line loop
-        $FileName = $env:USERPROFILE + "\" + $FilePrefix + "ping.log"
+        $FileName = $ToolPath + "\" + $FilePrefix + "ping.log"
         $PingArray = New-Object System.Collections.Generic.List[System.Object]
         $PingLoss = "Error"
         $PingSent = "Error"
