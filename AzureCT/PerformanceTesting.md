@@ -3,7 +3,7 @@
 ## Link Performance
 This collection of PowerShell commandlets will download required files to run the Get-LinkPerformance command which runs a series of iPerf load tests and PSPing TCP pings concurrently between a local source and a remote host running iPerf3 in server mode. Six tests of increasing load are performed and results are output at the conclusion of the test.
 
-![1]
+[![0]][0]
 
 >**Note**: This tool is not certified by Microsoft, nor is it supported by Microsoft support. Download and use at your own risk. While the author is an employee of Microsoft, this tool is provided as my best effort to provide insight into the connectivity between an on-premise network and an Azure endpoint. See the [Support and Legal Disclaimers](#support-and-legal-disclaimers) below for more info.
 
@@ -104,7 +104,10 @@ This tool has three perquisite resources that must be in place before using:
 	```
 
 #### Tool Output
-While the test is running, the progress of each test run (Stage) will be displayed, and the text of which rest run is currently executing will be displayed in the command prompt.
+
+[![1]][1]
+
+While the test is running, the progress of each test run (Stage) will be displayed, and the text of which test run is currently executing will be displayed in the command prompt.
 
 Once all testing is completed, a table formatted matrix of the test results will be output (the results will be list formatted if the -DetailedOutput option is used).
 
@@ -131,8 +134,8 @@ Microsoft provides no support for this software. All support, assistance, and in
 THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; INCREMENTAL AZURE COSTS INCURRED THROUGH USE OF THIS SOFTWARE; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <!--Image References-->
-[0]: ./media/AzureCTAvailability.png "AzureCT Availability Test Diagram"
-[1]: ./media/AzureCTPerformance.png "AzureCT Performance Test Diagram"
+[0]: ./media/AzureCTPerformance.png "AzureCT Performance Test Diagram"
+[1]: ./media/PowerShellTenSeconds.png "Ten-Second Performance Test"
 
 <!--Link References-->
 [iPerf] http://iPerf.fr

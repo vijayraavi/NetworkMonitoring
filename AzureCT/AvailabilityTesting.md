@@ -5,7 +5,7 @@ This collection of server side web pages and local PowerShell that will generate
 
 It is designed to provide an indication, over time, of the link between a Virtual Machine in Azure and an on-premise network. While the focus is on network availability, the test is done from a PC client to an IIS server in Azure. This provides a view into the availability of an end-to-end scenario, not just a single point or component in the complex chain that makes up a VPN or an ExpressRoute network connection. The hope is that this will provide insight into the end-to-end network availability.
 
-![0]
+[![0]][0]
 
 >**Note**: This tool is not certified by Microsoft, nor is it supported by Microsoft support. Download and use at your own risk. While the author is an employee of Microsoft, this tool is provided as my best effort to provide insight into the connectivity between an on-premise network and an Azure endpoint. See the [Support and Legal Disclaimers](#support-and-legal-disclaimers) below for more info.
 
@@ -162,7 +162,6 @@ THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLU
 
 <!--Image References-->
 [0]: ./media/AzureCTAvailability.png "AzureCT Availability Test Diagram"
-[1]: ./media/AzureCTPerformance.png "AzureCT Performance Test Diagram"
 
 <!--Link References-->
 [One Minute]: ./media/RunOneMinute.md
