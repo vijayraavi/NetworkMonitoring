@@ -4,7 +4,10 @@ function Remove-AzureCT {
     Clear-AzureCTHistory -ErrorAction SilentlyContinue
 
     $ToolPath = "C:\ACTTools\"
-    If (-Not (Test-Path $ToolPath)){Remove-Item -ItemType Directory -Force -Path $ToolPath | Out-Null}
+    If (Test-Path $ToolPath){
+        Remove-Item -Force -Path $ToolPath -Recurse -ErrorAction Stop | Out-Null
+        Write-Host "AzureCT tools directory removed" -ForegroundColor Green
+    } # End If
 
     $Destination = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath 'WindowsPowerShell\Modules\AzureCT'
     If (Test-Path $Destination) {
