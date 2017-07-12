@@ -6,7 +6,9 @@
 
 The current tools/tool-sets are:
 #### AzureCT
-[AzureCT][AzureCT] is a collection of server side web pages and local PowerShell that will generate, collect, store, and display availability statistics of the network between you and a newly built Windows VM in Azure. It will do more in the future, but currently only provides availability information.
+The Azure Connectivity Toolkit ([AzureCT][AzureCT]) is a PowerShell module and collection of server side web pages will test, generate, collect, store, and display performance and availability statistics of the network between you and Azure. The two main areas of functionality are:
+ - A network availability test (Get-AzureNetworkAvailability) that runs pings and traceroutes over an extended period of time to show end to end availability and hop latency.
+ - A bandwidth and latency tester (Get-LinkPerformance) that runs a series of iPerf3 load tests while concurently doing a TCP ping to show latency under various loads.
 
 #### LogConverter
 [LogConverter][LogConverter] contains code for downloading operational network logs and converting them to .CSV files. Files can then be uploaded to Power BI for analysis.
