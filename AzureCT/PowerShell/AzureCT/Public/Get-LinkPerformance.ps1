@@ -123,7 +123,7 @@
     $FileArray = "P00", "P01", "P06", "P16", "P17", "P32"
     $PingDuration = $TestSeconds
     $LoadDuration = $TestSeconds + 10
-    If ($RemoteHostOS="Windows") {$PingPort="3389"} Else {$PingPort="22"}
+    If ($RemoteHostOS -eq "Windows") {$PingPort="3389"} Else {$PingPort="22"}
     [String]$HostPort = [string]$RemoteHost + ":" + [String]$PingPort
 
     # 3. Clear old run files
