@@ -20,8 +20,8 @@ function Install-AzureCT {
     $FileName += 'Public/Install-LinkPerformance.ps1'
     $FileName += 'Public/Get-LinkPerformance.ps1'
     
-   
-    $Destination = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath 'WindowsPowerShell\Modules\AzureCT\'
+    #$Destination = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath 'WindowsPowerShell\Modules\AzureCT\'
+    $Destination = 'C:\Program Files\WindowsPowerShell\Modules\AzureCT\'
     New-Item -Path ($Destination) -ItemType Directory -Force | Out-Null
     New-Item -Path ($Destination + "Public") -ItemType Directory -Force | Out-Null
 
