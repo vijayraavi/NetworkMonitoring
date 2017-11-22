@@ -10,7 +10,7 @@ This collection of PowerShell commandlets will download required files to run th
 ### Fast Start
 If you just want to install the toolkit, this is the place to start:
 
-1. Install [iPerf3][iPerf] on a host (Linux or Windows) on the "far end" or remote side of the network link you're testing. If the remote host is a Window machine you can install the AzureCT and run the Install command mentioned below to install and configure iPerf. If there is a host firewall ensure port 5201 is open to allow iPerf to run.
+1. Install [iPerf3](https://iperf.fr) on a host (Linux or Windows) on the "far end" or remote side of the network link you're testing. If the remote host is a Window machine you can install the AzureCT and run the Install command mentioned below to install and configure iPerf. If there is a host firewall ensure port 5201 is open to allow iPerf to run.
 2. On the local "near end" host run the following command from PowerShell to install the AzureCT PowerShell module:
 
 	```powershell	
