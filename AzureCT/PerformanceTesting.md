@@ -10,7 +10,7 @@ This collection of PowerShell commandlets will download required files to run th
 ### Fast Start
 If you just want to install the toolkit, this is the place to start:
 
-1. Install [iPerf3](https://iperf.fr) on a host (Linux or Windows) on the "far end" or remote side of the network link you're testing. If the remote host is a Window machine you can install the AzureCT and run the Install command mentioned below to install and configure iPerf. If there is a host firewall ensure port 5201 is open to allow iPerf to run.
+1. Install [iPerf3][iPerf] on a host (Linux or Windows) on the "far end" or remote side of the network link you're testing. If the remote host is a Window machine you can install the AzureCT and run the Install command mentioned below to install and configure iPerf. If there is a host firewall ensure port 5201 is open to allow iPerf to run.
 2. On the local "near end" host run the following command from PowerShell to install the AzureCT PowerShell module:
 
 	```powershell	
@@ -73,7 +73,7 @@ This tool has three perquisite resources that must be in place before using:
 	- Run the Install-LinkPerformance command to download iPerf and PSPing as well as set the firewall rules. Note: The -Force option can be used for unattended installations.
 2. Remote Host Instructions
 	- Note: If the remote host is Windows, you can install the AzureCT module as in step one above and then run the Install-LinkPerformance command to install and configure iPerf.
-	- Install iPerf3: [http://iperf.fr][iPerf]
+	- Install iPerf3 from [iperf.fr][iPerf]
 	- Start iPerf3 in server mode (e.g. "iPerf3 -s")
 	- Open firewall port 5201 (default iPerf3 port)
 	- Ensure host is listening on the admin port (3389 for windows or 22 or Linux)
@@ -138,4 +138,4 @@ THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLU
 [1]: ./media/PowerShellTenSeconds.png "Ten-Second Performance Test"
 
 <!--Link References-->
-[iPerf] http://iPerf.fr
+[iPerf]: http://iPerf.fr
